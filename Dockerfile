@@ -1,19 +1,18 @@
-FROM python:3.9-alpine
-LABEL Author=JVT038 \
-    Maintainer=JVT038 \
-    Name=MetaTube
-ENV PORT=5000 \
-    FFMPEG=/usr/bin \
-    DOWNLOADS=/downloads \ 
-    DATABASE_URL=sqlite:////database/app.db
-EXPOSE $PORT
-COPY . /config/
-RUN \
-    apk update && \
-    apk add --no-cache python3-dev libffi-dev gcc musl-dev make ffmpeg libmagic && \
-    mkdir -p /config && \
-    pip3 install -r /config/requirements.txt && \
-    apk del --purge python3-dev libffi-dev gcc musl-dev make && \
-    mkdir -p $DOWNLOADS
+FROM python:3.9.1-buster
 
-ENTRYPOINT ["/usr/local/bin/python3", "config/metatube.py"]
+ENV VIRTUAL_ENV "/venv"
+RUN python -m venv $VIRTUAL_ENV
+ENV PATH "$VIRTUAL_ENV/bin:$PATH"
+
+RUN apt-get update && apt-get upgrade -y
+RUN apt-get install -y ffmpeg libmagic1
+RUN python -m pip install --upgrade pip
+
+WORKDIR /metatube
+RUN chmod 777 /metatube
+
+COPY . .
+
+RUN pip install -U -r requirements.txt
+
+CMD ["bash", "x.sh"]
