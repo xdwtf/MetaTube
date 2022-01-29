@@ -8,11 +8,13 @@ RUN apt-get update && apt-get upgrade -y
 RUN apt-get install -y ffmpeg libmagic1
 RUN python -m pip install --upgrade pip
 
+COPY requirements.txt /requirements.txt
+RUN cd /
+RUN pip3 install -U -r requirements.txt
+
 WORKDIR /metatube
 RUN chmod 777 /metatube
 
-COPY . .
+COPY x.sh /x.sh
 
-RUN pip install -U -r requirements.txt
-
-CMD ["bash", "x.sh"]
+CMD ["bash", "/x.sh"]
