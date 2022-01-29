@@ -8,12 +8,12 @@ import os
 if __name__ == "__main__":
     app = create_app()
     port = int(os.environ.get('PORT'))
-    domain = os.environ.get('DOMAIN')
+    host = os.environ.get('HOST', '0.0.0.0')
     debug = os.environ.get('DEBUG', False)
     log_output = os.environ.get('LOG', True)
     get_hub().NOT_ERROR += (KeyboardInterrupt,)
     try:
-        #print(u'Starting the webserver on http://%s:%s...'%(domain, port))
-        socketio.run(app, port=port, log_output=strtobool(str(log_output)))
+        print(u'Starting the webserver on http://%s:%s...'%(host, port))
+        socketio.run(app, host=host, port=port, log_output=strtobool(str(log_output)))
     except KeyboardInterrupt:
         print('Stopped server because of KeyboardInterrupt')
