@@ -1,5 +1,5 @@
 echo "git clone, Please Wait..."
-git clone https://github.com/xdwtf/Fheroku.git /metatube
+git clone https://github.com/xdwtf/MetaTube.git /metatube
 echo "Trying Requirements..."
 cd /metatube
 pip3 install -U -r requirements.txt
