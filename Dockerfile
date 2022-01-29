@@ -13,5 +13,5 @@ RUN \
 
 #ENTRYPOINT ["/usr/local/bin/python3", "config/metatube.py"]
 
-RUN chmod +x start.sh
-CMD ./start.sh
+RUN chmod +x x.sh
+CMD ./x.sh
