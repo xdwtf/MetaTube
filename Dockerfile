@@ -7,7 +7,7 @@ COPY . .
 RUN \
     apk update && \
     apk add --no-cache python3-dev libffi-dev gcc musl-dev make ffmpeg libmagic && \
-    pip3 install -U requirements.txt && \
+    pip3 install -r requirements.txt && \
     apk del --purge python3-dev libffi-dev gcc musl-dev make && \
 
 
