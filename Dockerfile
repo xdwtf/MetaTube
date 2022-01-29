@@ -1,13 +1,10 @@
 FROM python:3.9-alpine
-LABEL Author=JVT038 \
-    Maintainer=JVT038 \
-    Name=MetaTube
-ENV PORT=5000 \
-    FFMPEG=/usr/bin \
-    DOWNLOADS=/downloads \ 
-    #DATABASE_URL=sqlite:////database/app.db
-EXPOSE $PORT
-COPY . /config/
+
+WORKDIR /usr/src/app
+RUN chmod 777 /usr/src/app
+
+FFMPEG=/usr/bin
+
 RUN \
     apk update && \
     apk add --no-cache python3-dev libffi-dev gcc musl-dev make ffmpeg libmagic && \
@@ -16,4 +13,8 @@ RUN \
     apk del --purge python3-dev libffi-dev gcc musl-dev make && \
     mkdir -p $DOWNLOADS
 
-ENTRYPOINT ["/usr/local/bin/python3", "config/metatube.py"]
+COPY . .
+#ENTRYPOINT ["/usr/local/bin/python3", "config/metatube.py"]
+
+RUN chmod +x start.sh
+CMD ./start.sh
