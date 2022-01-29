@@ -1,15 +1,18 @@
 FROM python:3.9-alpine
 
-WORKDIR /usr/src/app
-RUN chmod 777 /usr/src/app
+ENV VIRTUAL_ENV "/venv"
+RUN python -m venv $VIRTUAL_ENV
+ENV PATH "$VIRTUAL_ENV/bin:$PATH"
 
-RUN apk add --update ffmpeg && \
-    apk add --update --virtual .build-deps python3-dev libffi-dev gcc musl-dev make libmagic && \
-    pip3 install -r requirements.txt && \
-    apk del --purge python3-dev libffi-dev gcc musl-dev make
+RUN apt-get update && apt-get upgrade -y
+RUN apt-get install -y ffmpeg libmagic
+RUN python -m pip install --upgrade pip
+
+WORKDIR /metatube
+RUN chmod 777 /metatube
 
 COPY . .
-#ENTRYPOINT ["/usr/local/bin/python3", "config/metatube.py"]
 
-RUN chmod +x x.sh
-CMD ./x.sh
+RUN pip install -U -r requirements.txt
+
+CMD ["bash", "x.sh"]
