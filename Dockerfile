@@ -5,7 +5,7 @@ LABEL Author=JVT038 \
 ENV PORT=5000 \
     FFMPEG=/usr/bin \
     DOWNLOADS=/downloads \ 
-    DATABASE_URL=sqlite:////database/app.db
+    #DATABASE_URL=sqlite:////database/app.db
 EXPOSE $PORT
 COPY . /config/
 RUN \
