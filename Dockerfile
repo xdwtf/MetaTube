@@ -5,7 +5,8 @@ RUN python -m venv $VIRTUAL_ENV
 ENV PATH "$VIRTUAL_ENV/bin:$PATH"
 
 RUN apt-get update && apt-get upgrade -y
-RUN apt-get install -y ffmpeg libmagic
+RUN apt-get install -y ffmpeg
+RUN apt-get install -y libmagic
 RUN python -m pip install --upgrade pip
 
 WORKDIR /metatube
